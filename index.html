@@ -99,6 +99,80 @@ footer a { padding-block: .75rem; }
   .readout { padding-inline: .65rem; font-size: .65rem; letter-spacing: .05em; }
 }
 @media (prefers-reduced-motion: reduce) { .blink { animation: none; } }
+
+/* Flight deck */
+:root {
+  --bg: #080a11;
+  --surface: #101520;
+  --ink: #f8f7f3;
+  --muted: #b4b9c9;
+  --accent: #ffcf92;
+  --line: #2d3446;
+}
+.mast { background: #080a11f5; }
+.brand span { color: #110c09; background: var(--accent); border-color: var(--accent); }
+nav a:hover { color: var(--accent); }
+.hero { position: relative; isolation: isolate; overflow: hidden; background: #080b16; }
+.hero .wrap { position: relative; display: block; padding-block: 0; }
+.hero-copy { position: relative; z-index: 2; width: 55%; padding-block: clamp(5.5rem, 11vw, 9.5rem) clamp(5rem, 9vw, 8rem); }
+.hero .eyebrow { display: inline-flex; align-items: center; gap: .6rem; letter-spacing: .14em; }
+.hero .eyebrow::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: var(--accent); box-shadow: 0 0 .9rem #ffbb72; }
+h1 { font-size: clamp(3.35rem, 7.7vw, 7.5rem); font-weight: 760; letter-spacing: -.083em; margin-block: .95rem 1.35rem; }
+h1 span { color: #d8dff4; }
+.lede { max-width: 44ch; color: #c8cedd; }
+.button.primary { color: #1a110a; }
+.button.primary:hover { background: #ffe4bf; }
+.button { background: #0b111dc4; }
+.visual {
+  position: absolute; z-index: 0; inset: 0 calc((min(72rem, 100vw - clamp(2rem, 7vw, 6rem)) - 100vw) / 2) 0 28%;
+  width: auto; max-width: none; border: 0; border-radius: 0;
+  background: radial-gradient(ellipse at 61% 50%, #2c2850 0, #12182c 44%, #090c18 76%);
+}
+.visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #080b16, #080b16d9 13%, transparent 44%), linear-gradient(0deg, #080b16, transparent 23%); pointer-events: none; }
+.sky { width: 100%; height: 100%; }
+.readout { position: absolute; z-index: 1; right: clamp(1rem, 5vw, 5rem); bottom: 2rem; border: 0; padding: 0; gap: 1.2rem; }
+.flight-strip { border-bottom: 1px solid var(--line); background: #0e131e; }
+.flight-strip .wrap { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.flight-strip div { padding: 1.05rem clamp(.75rem, 2.5vw, 1.8rem); border-left: 1px solid var(--line); }
+.flight-strip div:last-child { border-right: 1px solid var(--line); }
+.flight-strip strong { display: block; font-size: .93rem; }
+.flight-strip span { display: block; color: var(--accent); margin-bottom: .22rem; }
+.section-intro .eyebrow { display: flex; gap: .55rem; align-items: center; }
+.section-intro .eyebrow::before { content: ""; width: 1.45rem; height: 1px; background: var(--accent); }
+#projects { background: radial-gradient(ellipse at 70% 35%, #171a30, transparent 64%); }
+#projects .section-layout { display: block; }
+#projects .section-intro { margin-bottom: 1.6rem; }
+.cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.card, .card:first-child { display: flex; flex-direction: column; background: #101520; padding: 0; overflow: hidden; }
+.card-body { padding: 1.2rem; display: flex; flex-direction: column; flex: 1; }
+.card .tags { margin-top: auto; padding-top: 1rem; }
+.card summary { margin-inline: .15rem; }
+.card-graphic { display: block; width: 100%; height: auto; background: #131b2b; border-bottom: 1px solid var(--line); }
+.card-graphic .grid { fill: none; stroke: #293249; }
+.card-graphic .wire { fill: none; stroke: #8a96ba; stroke-width: 1.4; stroke-dasharray: 3 4; }
+.card-graphic .node { fill: #18223a; stroke: #8292c3; }
+.card-graphic .signal { fill: none; stroke: #ffcf92; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.card-graphic .point { fill: #ffcf92; }
+.contact { background: radial-gradient(ellipse at 95% 100%, #252039, transparent 73%); }
+@media (max-width: 850px) {
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 680px) {
+  .hero .wrap { display: flex; flex-direction: column; align-items: stretch; padding-block: 0; gap: 0; }
+  .hero-copy { width: 100%; padding-block: 3.2rem 1rem; }
+  h1 { font-size: clamp(2.65rem, 10.2vw, 4.9rem); }
+  .visual { position: relative; inset: auto; margin: 0 -1rem; width: auto; }
+  .visual::after { background: linear-gradient(180deg, #080b16, transparent 24%), linear-gradient(0deg, #080b16, transparent 27%); }
+  .sky { height: auto; }
+  .readout { bottom: .8rem; right: 1rem; }
+  .cards { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .flight-strip .wrap { width: 100%; }
+  .flight-strip div { padding-inline: .55rem; }
+  .flight-strip strong { font-size: .74rem; }
+  .flight-strip span { font-size: .64rem; }
+}
 </style>
 </head>
 <body>
@@ -125,28 +199,39 @@ footer a { padding-block: .75rem; }
         </div>
       </div>
       <figure class="visual" aria-label="A jet crossing a star field beside a ringed planet">
-        <svg class="sky" viewBox="700 66 735 535" aria-hidden="true">
+        <svg class="sky" viewBox="660 14 780 670" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
 <defs>
 <pattern id="stars" width="233" height="147" patternUnits="userSpaceOnUse"><g fill="#aabfea"><circle cx="17" cy="31" r="1"/><circle cx="104" cy="82" r=".8"/><circle cx="56" cy="134" r=".7"/><circle cx="191" cy="29" r="1.2"/><circle cx="218" cy="113" r=".7"/><circle cx="142" cy="125" r=".6"/><circle cx="67" cy="62" r=".6"/></g></pattern>
-<radialGradient id="planet" cx=".32" cy=".23" r=".78"><stop stop-color="#678dc0"/><stop offset=".5" stop-color="#294975"/><stop offset="1" stop-color="#0c152b"/></radialGradient>
+<radialGradient id="planet" cx=".32" cy=".23" r=".78"><stop stop-color="#a99ac8"/><stop offset=".46" stop-color="#585a90"/><stop offset=".79" stop-color="#293450"/><stop offset="1" stop-color="#121729"/></radialGradient>
 <linearGradient id="jet" x2="0" y2="1"><stop stop-color="#f0f7ff"/><stop offset="1" stop-color="#637faf"/></linearGradient>
 <linearGradient id="trail"><stop stop-color="#96f2df" stop-opacity="0"/><stop offset="1" stop-color="#96f2df"/></linearGradient>
 <path id="spark" d="M0 -9Q2 -2 9 0Q2 2 0 9Q-2 2 -9 0Q-2 -2 0 -9Z"/>
 </defs>
 <path fill="url(#stars)" opacity=".55" d="M0 0h1440v700H0z"/>
+<circle cx="1070" cy="340" r="278" fill="none" stroke="#9b90b8" stroke-opacity=".28" stroke-dasharray="1 8"/>
+<circle cx="1070" cy="340" r="252" fill="none" stroke="#9b90b8" stroke-opacity=".16"/>
+<path d="M1070 62v23m0 510v23M792 340h23m510 0h23" stroke="#9b90b8" stroke-opacity=".45"/>
 <circle cx="1070" cy="340" r="225" fill="none" stroke="#6f96ce" stroke-opacity=".13"/>
-<circle cx="1070" cy="340" r="205" fill="url(#planet)" stroke="#779dcb" stroke-opacity=".8"/>
+<circle cx="1070" cy="340" r="205" fill="url(#planet)" stroke="#b5b4e8" stroke-opacity=".8"/>
 <ellipse cx="1070" cy="340" rx="300" ry="79" fill="none" stroke="#96b7e9" stroke-opacity=".4" transform="rotate(-22 1070 340)"/>
 <ellipse cx="1070" cy="340" rx="330" ry="101" fill="none" stroke="#a8c2e5" stroke-opacity=".3" stroke-dasharray="2 8" transform="rotate(-22 1070 340)"/>
 <path d="M771 510Q972 470 1110 310" fill="none" stroke="url(#trail)" stroke-width="2"/>
 <path d="M837 514Q981 478 1121 322" fill="none" stroke="url(#trail)" stroke-dasharray="4 9"/>
 <g transform="translate(1120 304) rotate(-31)" fill="url(#jet)" stroke="#c8e2ff" stroke-width="1.2" stroke-linejoin="round"><path d="M-98 6L-62 -2 -83 -23 -73 -26 -40 -5 -8 -8 -25 -61 -11 -65 29 -10 66 -10Q95 -10 104 0 96 9 66 10L30 11 -12 65 -26 61 -8 12 -53 11 -79 25 -90 22 -76 12Z"/><path d="M54 -5H74L84 0 74 4H54Z" fill="#223e6a" stroke="none"/></g>
-<g fill="#b7fff1" class="blink"><use href="#spark" x="900" y="131"/><use href="#spark" x="1286" y="171"/><use href="#spark" x="1267" y="510"/><use href="#spark" x="780" y="315"/><use href="#spark" x="1375" y="360"/></g>
+<g fill="#ffcf92" class="blink"><use href="#spark" x="900" y="131"/><use href="#spark" x="1286" y="171"/><use href="#spark" x="1267" y="510"/><use href="#spark" x="780" y="315"/><use href="#spark" x="1375" y="360"/></g>
 </svg>
-        <figcaption class="readout"><span>Flight log / 01</span><span>Bengaluru, India</span></figcaption>
+        <figcaption class="readout"><span>Flight deck / BLR</span><span>Bengaluru, India</span></figcaption>
       </figure>
     </div>
   </section>
+
+  <div class="flight-strip" aria-label="Areas of work">
+    <div class="wrap">
+      <div><span class="number">01 / Build</span><strong>CI/CD automation</strong></div>
+      <div><span class="number">02 / Secure</span><strong>Release quality</strong></div>
+      <div><span class="number">03 / Evaluate</span><strong>AI benchmarking</strong></div>
+    </div>
+  </div>
 
   <section class="section" id="experience" aria-labelledby="experience-title">
     <div class="wrap section-layout">
@@ -180,25 +265,34 @@ footer a { padding-block: .75rem; }
       <header class="section-intro"><p class="eyebrow">02 / Mission archive</p><h2 id="projects-title">Selected projects</h2><p>What I built, how it works, and the tools I used.</p></header>
       <div class="cards">
         <article class="card">
+          <svg class="card-graphic" viewBox="0 0 280 116" aria-hidden="true"><path class="grid" d="M0 29h280M0 58h280M0 87h280M35 0v116M70 0v116M105 0v116M140 0v116M175 0v116M210 0v116M245 0v116"/><path class="wire" d="M72 58h136"/><rect class="node" x="42" y="38" width="52" height="40" rx="8"/><rect class="node" x="114" y="38" width="52" height="40" rx="8"/><rect class="node" x="186" y="38" width="52" height="40" rx="8"/><path class="signal" d="m56 59 7 7 16-16m48 1h26v15h-26zm75 8 8 8 14-17"/></svg>
+          <div class="card-body">
           <span class="number">01 / Delivery automation</span>
           <h3>CI/CD Pipeline Automation</h3>
           <p>Built a workflow that takes application code from Git through container packaging, configuration, and deployment.</p>
           <div class="tags">Jenkins · Docker · Ansible · Kubernetes</div>
           <details><summary>Implementation details</summary><p>Jenkins orchestrates the delivery steps. Docker packages the application, Ansible handles configuration, and Kubernetes runs the deployment.</p></details>
+          </div>
         </article>
         <article class="card">
+          <svg class="card-graphic" viewBox="0 0 280 116" aria-hidden="true"><path class="grid" d="M0 29h280M0 58h280M0 87h280M35 0v116M70 0v116M105 0v116M140 0v116M175 0v116M210 0v116M245 0v116"/><rect class="node" x="81" y="23" width="118" height="70" rx="9"/><path class="wire" d="M112 47h63m-63 13h53m-53 13h60"/><path class="signal" d="m94 47 3 3 5-6m-8 15 3 3 5-6m-8 15 3 3 5-6"/><circle class="point" cx="215" cy="34" r="3"/></svg>
+          <div class="card-body">
           <span class="number">02 / Model evaluation</span>
           <h3>AI-Generated Code Review</h3>
           <p>Designed a repeatable way to review AI-generated Python solutions for correctness, edge cases, readability, and error handling.</p>
           <div class="tags">Python · Test cases · Scoring rubrics</div>
           <details><summary>Evaluation method</summary><p>I used Python test cases to check behavior and a scoring rubric to record defects and explain each evaluation decision.</p></details>
+          </div>
         </article>
         <article class="card">
+          <svg class="card-graphic" viewBox="0 0 280 116" aria-hidden="true"><path class="grid" d="M0 29h280M0 58h280M0 87h280M35 0v116M70 0v116M105 0v116M140 0v116M175 0v116M210 0v116M245 0v116"/><path class="wire" d="M140 57 65 83m75-26 75 26m-75-26V30"/><circle class="node" cx="140" cy="57" r="20"/><circle class="node" cx="65" cy="83" r="10"/><circle class="node" cx="215" cy="83" r="10"/><circle class="point" cx="140" cy="21" r="4"/><path class="signal" d="M131 53h18m-18 7h12"/></svg>
+          <div class="card-body">
           <span class="number">03 / Applied AI</span>
           <h3>Interview Helper</h3>
           <p>Built a Streamlit app that generates interview practice questions and answers from a résumé and job description.</p>
           <div class="tags">Streamlit · Cohere</div>
           <details><summary>How it works</summary><p>The app uses Cohere models to tailor practice material to the candidate’s background and the role.</p></details>
+          </div>
         </article>
       </div>
     </div>
