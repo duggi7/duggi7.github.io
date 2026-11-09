@@ -173,6 +173,17 @@ h1 span { color: #d8dff4; }
   .flight-strip strong { font-size: .74rem; }
   .flight-strip span { font-size: .64rem; }
 }
+
+.earth-map { animation: earth-spin 38s linear infinite; }
+.flight-formation { animation: formation-fly 9s ease-in-out infinite; }
+@keyframes earth-spin { to { transform: translateX(-580px); } }
+@keyframes formation-fly {
+  0%, 100% { transform: translate(-26px, 17px); }
+  50% { transform: translate(34px, -24px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .earth-map, .flight-formation { animation: none; }
+}
 </style>
 </head>
 <body>
@@ -198,13 +209,37 @@ h1 span { color: #d8dff4; }
           <a class="button" href="https://github.com/duggi7">GitHub</a>
         </div>
       </div>
-      <figure class="visual" aria-label="A jet crossing a star field beside a ringed planet">
+      <figure class="visual" aria-label="A small jet and two trailing rockets fly past a rotating Earth">
         <svg class="sky" viewBox="660 14 780 670" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
 <defs>
 <pattern id="stars" width="233" height="147" patternUnits="userSpaceOnUse"><g fill="#aabfea"><circle cx="17" cy="31" r="1"/><circle cx="104" cy="82" r=".8"/><circle cx="56" cy="134" r=".7"/><circle cx="191" cy="29" r="1.2"/><circle cx="218" cy="113" r=".7"/><circle cx="142" cy="125" r=".6"/><circle cx="67" cy="62" r=".6"/></g></pattern>
-<radialGradient id="planet" cx=".32" cy=".23" r=".78"><stop stop-color="#a99ac8"/><stop offset=".46" stop-color="#585a90"/><stop offset=".79" stop-color="#293450"/><stop offset="1" stop-color="#121729"/></radialGradient>
-<linearGradient id="jet" x2="0" y2="1"><stop stop-color="#f0f7ff"/><stop offset="1" stop-color="#637faf"/></linearGradient>
-<linearGradient id="trail"><stop stop-color="#96f2df" stop-opacity="0"/><stop offset="1" stop-color="#96f2df"/></linearGradient>
+<radialGradient id="ocean" cx=".33" cy=".26" r=".82"><stop stop-color="#3c94d8"/><stop offset=".53" stop-color="#165887"/><stop offset="1" stop-color="#0c1b3a"/></radialGradient>
+<radialGradient id="earth-shadow" cx=".34" cy=".31" r=".75"><stop offset=".36" stop-color="#080d24" stop-opacity="0"/><stop offset=".78" stop-color="#07152f" stop-opacity=".31"/><stop offset="1" stop-color="#060d23" stop-opacity=".91"/></radialGradient>
+<radialGradient id="atmosphere"><stop offset=".83" stop-color="#66b7ff" stop-opacity="0"/><stop offset=".92" stop-color="#66b7ff" stop-opacity=".34"/><stop offset="1" stop-color="#66b7ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="jet" x2="0" y2="1"><stop stop-color="#fff9eb"/><stop offset="1" stop-color="#97afce"/></linearGradient>
+<linearGradient id="exhaust"><stop stop-color="#ffa668" stop-opacity="0"/><stop offset=".75" stop-color="#ffac72" stop-opacity=".55"/><stop offset="1" stop-color="#fff2c9"/></linearGradient>
+<clipPath id="earth-disc"><circle cx="1070" cy="340" r="201"/></clipPath>
+<!-- A stylized world map repeated edge to edge for the spinning globe. -->
+<g id="world-map" fill="#6cb19b" stroke="#9bc6a7" stroke-width="1.3" stroke-linejoin="round">
+  <path d="M18 141l27-12 28 4 18-14 41 5 11 17-14 16-19 2-14 20 9 13-10 13-11-6-8 9-21-11-11-25-21-8-12-14z"/>
+  <path d="M84 202l18 9 11 14 18 2 16 16-8 10-20-10-17-17z"/>
+  <path d="M142 238l30 12 18 25-8 20-17 9-5 23-22 31-10-10 5-27-11-17-9-25 5-24z"/>
+  <path d="M143 120l19-20 26-3 12 12-10 18-21 18-12-9z" fill="#b2d7cd"/>
+  <path d="M222 165l13-13 18 2 12-17 24-4 13 12 25-16 34 4 24-16 37 7 26 12 31-4 22 17 29 4 16 21-19 12-28-5-18 15-13 26-17 9-15-13-23 2-13 22-16 16-16-17-4-22-26 3-20-13-19 6-19-18-21 3-12-8-20 5-21-14z"/>
+  <path d="M239 203l26-7 28 10 25 26-8 12-11 14-9 25-19 20-13-6-5-23-20-16-9-27z"/>
+  <path d="M326 223l17 8 9 17-11 9-15-11-10-14zm-22 62 7 11-8 24-8 2zM428 238l15 16 17 11-7 10-13-8-19-23zm30 29 22 3 19 12-9 6-23-8zm45-66 12-19 7 2-8 24z"/>
+  <path d="M470 304l21-12 21 7 16-3 16 19-3 20-18 10-19-8-27 2-12-13zm75 46 12-17 7 3-5 15-11 13z"/>
+  <path d="M0 381q77-10 145 2t145 0 145 0 145-1v27H0z" fill="#c5e0e6" opacity=".68"/>
+  <g fill="none" stroke="#def5fb" stroke-width="5" stroke-linecap="round" opacity=".38">
+    <path d="M20 181q42-13 82 2m48 106q28-8 56 4m32-132q38-13 74 1m71 44q48-11 90 6m-24 106q34-9 67 4"/>
+  </g>
+</g>
+<g id="rocket">
+  <path d="M-34 0Q-52-7-83 0q31 7 49 0" fill="url(#exhaust)"/>
+  <path d="M-30-4h11l10-5h13Q14-9 22 0 14 9 4 9H-9l-10-5h-11z" fill="#e9edf6" stroke="#a6bfde"/>
+  <path d="m-16-5-9-8h-9l5 10m13 8-9 8h-9l5-10" fill="#f4ad79"/>
+  <circle cx="6" r="3" fill="#244565"/>
+</g>
 <path id="spark" d="M0 -9Q2 -2 9 0Q2 2 0 9Q-2 2 -9 0Q-2 -2 0 -9Z"/>
 </defs>
 <path fill="url(#stars)" opacity=".55" d="M0 0h1440v700H0z"/>
@@ -212,12 +247,25 @@ h1 span { color: #d8dff4; }
 <circle cx="1070" cy="340" r="252" fill="none" stroke="#9b90b8" stroke-opacity=".16"/>
 <path d="M1070 62v23m0 510v23M792 340h23m510 0h23" stroke="#9b90b8" stroke-opacity=".45"/>
 <circle cx="1070" cy="340" r="225" fill="none" stroke="#6f96ce" stroke-opacity=".13"/>
-<circle cx="1070" cy="340" r="205" fill="url(#planet)" stroke="#b5b4e8" stroke-opacity=".8"/>
-<ellipse cx="1070" cy="340" rx="300" ry="79" fill="none" stroke="#96b7e9" stroke-opacity=".4" transform="rotate(-22 1070 340)"/>
-<ellipse cx="1070" cy="340" rx="330" ry="101" fill="none" stroke="#a8c2e5" stroke-opacity=".3" stroke-dasharray="2 8" transform="rotate(-22 1070 340)"/>
-<path d="M771 510Q972 470 1110 310" fill="none" stroke="url(#trail)" stroke-width="2"/>
-<path d="M837 514Q981 478 1121 322" fill="none" stroke="url(#trail)" stroke-dasharray="4 9"/>
-<g transform="translate(1120 304) rotate(-31)" fill="url(#jet)" stroke="#c8e2ff" stroke-width="1.2" stroke-linejoin="round"><path d="M-98 6L-62 -2 -83 -23 -73 -26 -40 -5 -8 -8 -25 -61 -11 -65 29 -10 66 -10Q95 -10 104 0 96 9 66 10L30 11 -12 65 -26 61 -8 12 -53 11 -79 25 -90 22 -76 12Z"/><path d="M54 -5H74L84 0 74 4H54Z" fill="#223e6a" stroke="none"/></g>
+<circle cx="1070" cy="340" r="226" fill="url(#atmosphere)"/>
+<circle cx="1070" cy="340" r="201" fill="url(#ocean)"/>
+<g clip-path="url(#earth-disc)">
+  <g transform="rotate(-15 1070 340) translate(796 -20) scale(1 1.35)">
+    <g class="earth-map"><use href="#world-map"/><use href="#world-map" x="580"/></g>
+  </g>
+  <circle cx="1070" cy="340" r="201" fill="url(#earth-shadow)"/>
+</g>
+<circle cx="1070" cy="340" r="201" fill="none" stroke="#91cdff" stroke-opacity=".75" stroke-width="1.6"/>
+<path d="M806 495Q1036 489 1314 221" fill="none" stroke="#a8c2e5" stroke-opacity=".35" stroke-dasharray="3 8"/>
+<g class="flight-formation">
+  <use href="#rocket" transform="translate(1014 438) rotate(-29) scale(1.05)"/>
+  <use href="#rocket" transform="translate(1092 451) rotate(-33) scale(.86)"/>
+  <g transform="translate(1182 362) rotate(-32) scale(.57)">
+    <path d="M-87 -2Q-135 -11-206 -2q71 9 119 0m2 15q-47-6-99 1 52 9 99-1" fill="url(#exhaust)"/>
+    <path d="M-98 6L-62 -2 -83 -23 -73 -26 -40 -5 -8 -8 -25 -61 -11 -65 29 -10 66 -10Q95 -10 104 0 96 9 66 10L30 11 -12 65 -26 61 -8 12 -53 11 -79 25 -90 22 -76 12Z" fill="url(#jet)" stroke="#d9ecff" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M54 -5H74L84 0 74 4H54Z" fill="#223e6a"/>
+  </g>
+</g>
 <g fill="#ffcf92" class="blink"><use href="#spark" x="900" y="131"/><use href="#spark" x="1286" y="171"/><use href="#spark" x="1267" y="510"/><use href="#spark" x="780" y="315"/><use href="#spark" x="1375" y="360"/></g>
 </svg>
         <figcaption class="readout"><span>Flight deck / BLR</span><span>Bengaluru, India</span></figcaption>
